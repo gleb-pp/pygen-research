@@ -204,9 +204,50 @@ b = g.send(5)
 
 ## Эволюция генераторов
 
-To be continued...
+### Back to Python 2.2
 
-- что было до генераторов?
+Генераторы впервые появились в Python 2.2, до этого использовались только ручные итераторы. Например, для реализации аналога функции `count` из `itertools` приходилось создавать класс с методами `__iter__` и `__next__`, а также хранить состояние в атрибутах класса.
+
+```python
+class Counter:
+    def __init__(self):
+        self.current = 0
+
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        result = self.current
+        self.current += 1
+        return result
+
+counter_class = Counter()
+for i in range(10):
+  print(next(counter_class))
+```
+
+С появлением генераторов код стал гораздо проще и лаконичнее:
+
+```python
+def counting():
+    count = 0
+    while True:
+        yield count
+        count += 1
+
+counter_gen = counting()
+print(next(counter_gen))
+```
+
+Несмотря на удобство, важно понимать специфику работы генераторов. Хотя анализ скорости и памяти мы сделаем позже, уже сейчас можно заметить, что объект `counter_class` по сути является FSA с явно определенными состояниями и переходами между ними, а значит, поддерживает сериализацию в отличие от генератора, который хранит свой фрейм между вызовами и не имеет явно определенных состояний.
+
+```python
+import dill
+class_bytes = dill.dumps(counter_class)   # OK
+gen_bytes = dill.dumps(counter_gen)       # TypeError: cannot pickle 'generator' object
+```
+
+To be continued...
 - эволюция от yield к yield from
 - зарождение корутин и асинхронных генераторов
 
