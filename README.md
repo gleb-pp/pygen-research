@@ -50,12 +50,12 @@ print(g.send(20))  # print "Received: 20" and raise StopIteration
 
 ```python
 def f():
-  return 10
+    return 10
 
 print(f())  # 10
 
 def g():
-  yield 10
+    yield 10
 
 print(g())  # <generator object g at 0x104a4e800>
 ```
@@ -224,7 +224,7 @@ class Counter:
 
 counter_class = Counter()
 for i in range(10):
-  print(next(counter_class))
+    print(next(counter_class))
 ```
 
 С появлением генераторов код стал проще и лаконичнее:
@@ -254,13 +254,13 @@ gen_bytes = dill.dumps(counter_gen)       # TypeError: cannot pickle 'generator'
 
 ```python
 def tree_traverse(node):
-  if node is None:
-    return
-  for value in tree_traverse(node.left):
-    yield value    
-  yield node.value
-  for value in tree_traverse(node.right):
-    yield value
+    if node is None:
+        return
+    for value in tree_traverse(node.left):
+        yield value
+    yield node.value
+    for value in tree_traverse(node.right):
+        yield value
 ```
 
 Данный подход будет работать, однако в текущей реазизации:
@@ -319,8 +319,8 @@ next(g)  # вывод "Got: 42" + StopIteration
 ```python
 import asyncio
 async def coro():
-  await asyncio.sleep(1)
-  return 42
+    await asyncio.sleep(1)
+    return 42
 ```
 
 Обработка `await` происходит следующим образом:
@@ -335,7 +335,7 @@ async def coro():
 | Синтаксис | `def` + `yield` | `async def` + отсутствие `yield` |
 | Тип объекта | `PyGenObject` | `PyCoroObject` |
 | Флаг компилятора | `CO_GENERATOR` | `CO_COROUTINE` |
-| Обработка `YIELD FROM` | `GET_YIELD_FROM_ITER`: Ожидает итератор (`__iter__`) | `GET_AWAITABLE`: Ожидает awaitable (`__await__`) |
+| Обработка `YIELD FROM` в байт-коде | `GET_YIELD_FROM_ITER`: Ожидает итератор (`__iter__`) | `GET_AWAITABLE`: Ожидает awaitable (`__await__`) |
 
 ## Бенчмарки и границы применимости
 
