@@ -353,13 +353,13 @@ async def coro():
 
 | Сравнение | Генератор |
 | --- | --- |
-| <img src="src/benchmarks/lists/comparison_memory_usage.png" width="400"/> | <img src="src/benchmarks/lists/generator_memory_usage.png" width="400"/> |
+| <img src="src/benchmarks/lists/comparison_memory_usage.png" width="300"/> | <img src="src/benchmarks/lists/generator_memory_usage.png" width="300"/> |
 
 На графииках видно, что время итерации и по списку и по генератору линейно растет с увеличением количества элементов, однако итерация по генератору занимает в несколько раз больше времени. Это связано с тем, что при итерации по генератору происходит переключение контекста между фреймом генератора и вызывающим кодом, а также дополнительные проверки состояния генератора, что добавляет накладные расходы. В случае списка итерация происходит напрямую по выделенной памяти без дополнительных переключений контекста.
 
 | Сравнение | Генератор |
 | --- | --- |
-| <img src="src/benchmarks/lists/comparison_iteration_time.png" width="400"/> | <img src="src/benchmarks/lists/generator_iteration_time.png" width="400"/> |
+| <img src="src/benchmarks/lists/comparison_iteration_time.png" width="300"/> | <img src="src/benchmarks/lists/generator_iteration_time.png" width="300"/> |
 
 На графиках видно, что потребление памяти генератором остается почти постоянным, вне зависимости от количества элементов, тогда как список потребляет все больше памяти с увеличением количества элементов. Это вновь демонстрирует то, как генератор не хранит все элементы в памяти, а создает их по мере необходимости.
 
