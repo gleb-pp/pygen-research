@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 
 N = 10**5
 
-
 def generator_version(cnt):
     return (i * i for i in range(cnt))
 
